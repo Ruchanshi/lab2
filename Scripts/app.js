@@ -14,7 +14,17 @@ class Contact
     }
 }
 
-
+class User
+{
+    constructor(firstName = "", lastName = "", emailAddress = "", password = "", confirmPassword="")
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+    }
+}
 
 
 "use strict";
@@ -27,7 +37,7 @@ let app;
     // Declare Function Variables here...
     console.log("%cDeclaring Variables", "color: red;")
     let contactObject = new Contact();
-
+    let UserObject = new User();
     /**
      * Variable initialization in this function
      *
@@ -103,6 +113,8 @@ let app;
             });
         });
     }
+    $("errorMessage").hide();
+    $("contactName").select();
 
     function DisplayProductsContent()
     {
@@ -225,6 +237,7 @@ let app;
 
             clearForm();
         });
+        
 
         $("#resetButton").click((e)=>
         {
@@ -263,6 +276,52 @@ let app;
     function DisplayRegisterContent()
     {
         document.title = "WEBD6201 - Register";
+        function validateInput(selector, condition, errorMessage)
+        {
+            if(condition)
+            {
+                $("errorMessage").show();
+                $("errorMessage").text(errorMessage);
+                $(selector).select();
+                $(selector).css("border", "2px solid red");
+            }
+            else{
+                $("errorMessage").hide();
+                $(selector).css("border", "2px solid #ced4da");
+            }
+        }
+        $("#submitButton").click((e)=>
+    {
+        if(document.getElementById("registerForm").checkValidity() == false)
+        {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log("form not valid");
+        }
+
+        e.preventDefault();
+        let FirstName = $("#FirstName").val();
+        let lastName = $("#lastName").val();
+        let emailAddress = $("#emailAddress").val();
+        let password = $("#password").val();
+        let confirmPassword = $("#confirmPassword").val();
+
+        console.log(`First Name: ${FirstName}`);
+        console.log(`last Name: ${lastName}`);
+        console.log(`email Address: ${emailAddress}`);
+        console.log(`Password: ${password}`);
+        console.log(`Confirm Password: ${confirmPassword}`);
+
+        UserObject.FirstName = FirstName;
+        UserObject.lastName = lastName;
+        UserObject.emailAddress = emailAddress;
+        UserObject.password = password;
+        UserObject.confirmPassword = confirmPassword;
+
+        console.log(UserObject);3
+
+        
+    });
     }
 
     /**
